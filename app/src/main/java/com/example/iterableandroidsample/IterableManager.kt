@@ -20,7 +20,7 @@ object IterableManager {
         IterableApi.getInstance().track(name, toJson(data));
     }
 
-    fun trackPurchase(total: Double, items: ArrayList<CommerceItem>, data: Map<String, Any>? = null) {
+    fun trackPurchase(total: Double, items: MutableList<CommerceItem>, data: Map<String, Any>? = null) {
         IterableApi.getInstance().trackPurchase(total, items, toJson(data));
     }
 
@@ -37,7 +37,7 @@ class CommerceItems {
 
     companion object {
 
-        val listView: Array<CommerceItem> = arrayOf(
+        val listView: MutableList<CommerceItem> = mutableListOf(
             CommerceItem("item1", "Item 1", 2.99, 1),
             CommerceItem("item2", "Item 2", 5.99, 1),
             CommerceItem("item3", "Item 3", 8.99, 1),
@@ -47,17 +47,17 @@ class CommerceItems {
             CommerceItem("item7", "Item 7", 6.99, 1)
         )
 
-        val addToCart: Array<CommerceItem> = arrayOf(
+        val addToCart: MutableList<CommerceItem> = mutableListOf(
             CommerceItem("item1", "Item 1", 2.99, 1),
             CommerceItem("item2", "Item 2", 5.99, 1),
             CommerceItem("item3", "Item 3", 8.99, 1)
         )
 
-        val removeFromCart: Array<CommerceItem> = arrayOf(
+        val removeFromCart: MutableList<CommerceItem> = mutableListOf(
             CommerceItem("item3", "Item 3", 8.99, 1)
         )
 
-        val purchase: Array<CommerceItem> = arrayOf(
+        val purchase: MutableList<CommerceItem> = mutableListOf(
             CommerceItem("item1", "Item 1", 2.99, 1),
             CommerceItem("item2", "Item 2", 5.99, 1)
         )

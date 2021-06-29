@@ -1,36 +1,23 @@
 package com.example.iterableandroidsample
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.iterableandroidsample.ui.theme.IterableColor
 import com.example.iterableandroidsample.ui.theme.IterableAndroidSampleTheme
 import android.content.Intent
 import android.net.Uri
-import java.util.*
-
-private val LightGreen = Color(red = 116, green = 190, blue = 169)
-private val LightRed = Color(red = 219, green = 75, blue = 88)
-private val LightBlue = Color(red = 99, green = 193, blue = 238)
-private val DarkPurple = Color(red = 97, green = 42, blue = 106)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,58 +69,43 @@ fun IterableView() {
         )
         Spacer(modifier = Modifier.height(20.dp))
         IterableButton(title = "Track Custom Event",
-            color = LightGreen) {
+            color = IterableColor.lightGreen) {
             IterableManager.trackEvent("Android Custom Event",
                 mapOf("platform" to "iOS", "custom_key" to true))
         }
         IterableButton(title = "Product List View",
-            color = LightRed) {
+            color = IterableColor.lightRed) {
             IterableManager.trackEvent("Product List View",
                 mapOf(
-                    "item_id" to CommerceItems.listView.map { it.id },
-                    "item_name" to CommerceItems.listView.map { it.name },
-                    "item_price" to CommerceItems.listView.map { it.price }
+                    "productImpressions" to CommerceItems.listView
                 )
             )
         }
         IterableButton(title = "Add To Cart",
-            color = LightBlue) {
-            CommerceItems.addToCart.forEach { item ->
-                IterableManager.trackEvent("Add To Cart",
-                    mapOf(
-                        "item_id" to item.id,
-                        "item_name" to item.name,
-                        "item_price" to item.price,
-                        "item_quantity" to item.quantity,
-                    )
+            color = IterableColor.lightBlue) {
+            IterableManager.trackEvent("Add To Cart",
+                mapOf(
+                    "shoppingCartItems" to CommerceItems.addToCart
                 )
-            }
+            )
         }
         IterableButton(title = "Remove From Cart",
-            color = DarkPurple) {
-            CommerceItems.removeFromCart.forEach { item ->
-                IterableManager.trackEvent("Remove From Cart",
-                    mapOf(
-                        "item_id" to item.id,
-                        "item_name" to item.name,
-                        "item_price" to item.price,
-                        "item_quantity" to item.quantity,
-                    )
+            color = IterableColor.darkPurple) {
+            IterableManager.trackEvent("Remove From Cart",
+                mapOf(
+                    "shoppingCartItems" to CommerceItems.removeFromCart
                 )
-            }
+            )
         }
         IterableButton(title = "Purchase",
-            color = LightGreen) {
-            CommerceItems.purchase.forEach { item ->
-                IterableManager.trackEvent("Purchase",
-                    mapOf(
-                        "item_id" to item.id,
-                        "item_name" to item.name,
-                        "item_price" to item.price,
-                        "item_quantity" to item.quantity,
-                    )
+            color = IterableColor.lightPurple) {
+            IterableManager.trackPurchase(8.98, CommerceItems.purchase,
+                mapOf(
+                    "is_rewards_member" to true,
+                    "rewards_available" to 5000,
+                    "order_discount_code" to "Summer2021"
                 )
-            }
+            )
         }
     }
 }
